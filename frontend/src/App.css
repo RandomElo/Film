@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+/* Gestion de la navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 30px;
+}
+.navbar .logo {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.navLinks.mobile-menu {
+    margin-left: 0;
+}
+.navbar a {
+    color: black;
+}
+.navbar .navLinks .active {
+    text-decoration: underline;
+}
+.navbar a:hover {
+    text-decoration: underline;
+}
+.navbar .navLinks ul {
+    display: flex;
+}
+.navbar .navLinks ul li {
+    margin: 0 20px;
+    list-style: none;
+}
+/* Fin de la gestion de le navbar */
+/* Gestion du footer */
+footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 5px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(191, 190, 190);
+    border-top: 1px solid black;
+}
+footer p {
+    margin: 0;
+    padding: 0;
+}
+/* Fin de la gestion du footer */
+/* Gestion des éléments communs */
+main {
+    text-align: center;
+}
+#titre {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.bouton {
+    color: white;
+    background-color: black;
+    border: 1px solid black;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.bouton:hover {
+    color: black;
+    background-color: white;
+}
+/* Fin de la gestion des éléments communs */
