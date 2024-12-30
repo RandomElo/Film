@@ -10,15 +10,17 @@ export const AuthentifierProvider = ({ children }) => {
     const [chargement, setChargement] = useState(true);
     const recuperationCookieAuth = async () => {
         try {
-            const { erreur, reponse } = await Fetch("http://localhost:8100/authentification/cookie-auth", "GET");
-            if (!erreur) {
-                if (reponse.authentifier) {
+            const { reponse, detail } = await Fetch("http://localhost:8100/authentification/cookie-auth", "GET");
+
+
+            if (reponse) {
+                if (detail) {
                     setAuthentifier(true);
                 } else {
                     setAuthentifier(false);
                 }
             } else {
-                console.error(reponse);
+                console.error(detail);
             }
         } catch (erreur) {
             console.error(erreur);
@@ -27,6 +29,7 @@ export const AuthentifierProvider = ({ children }) => {
         }
     };
     useEffect(() => {
+        console.log("récupération cookie");
         recuperationCookieAuth();
     }, []);
 

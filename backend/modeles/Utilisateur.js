@@ -43,7 +43,7 @@ export default function (bdd) {
                 nom: req.params.nom,
             },
         }).then((utilisateur) => {
-            return res.json(!utilisateur);
+            return res.json({ reponse: true, detail: !utilisateur });
         });
     };
 
@@ -52,7 +52,7 @@ export default function (bdd) {
         try {
             req.Utilisateur.findOne({ where: { nom: req.body.nom } }).then((utilisateur) => {
                 if (utilisateur) {
-                    return res.json({ connecte: false, erreur: "Nom déjà existant" });
+                    return res.json({ reponse: false, messageErreur: "Nom déjà existant" });
                 }
             });
             const mdpHash = await bcrypt.hash(req.body.mdp, 12);
@@ -63,19 +63,19 @@ export default function (bdd) {
             return await req.Utilisateur.generationToken(res, utilisateur);
         } catch (erreur) {
             console.error(erreur);
-            return res.json({ connecte: false, erreur: erreur });
+            return res.json({ reponse: false, messageErreur: erreur });
         }
     };
     Utilisateur.connexion = async function (req, res) {
         const utilisateur = await req.Utilisateur.findOne({ where: { nom: req.body.nom } });
 
         if (!utilisateur) {
-            return res.json({ connecte: true, erreur: "Nom ou mot de passe incorrect" });
+            return res.json({ reponse: true, messageErreur: "Nom ou mot de passe incorrect" });
         }
         if (bcrypt.compare(req.body.mdp, utilisateur.mdp)) {
             return await req.Utilisateur.generationToken(res, utilisateur);
         } else {
-            return res.json({ connecte: true, erreur: "Nom ou mot de passe incorrect" });
+            return res.json({ reponse: true, messageErreur: "Nom ou mot de passe incorrect" });
         }
     };
     Utilisateur.generationToken = async function (res, utilisateur) {
@@ -91,7 +91,7 @@ export default function (bdd) {
                     sameSite: "none",
                     secure: true,
                 })
-                .json({ connecte: true });
+                .json({ reponse: true, detail: true });
         } catch (error) {
             console.error(error);
         }

@@ -8,5 +8,5 @@ export const connexion = async (req, res) => {
     await req.Utilisateur.connexion(req, res);
 };
 export const recuperationCookieAuth = (req, res) => {
-    res.json({ authentifier: req.cookies.utilisateur ? true : false });
+    res.json({ reponse:true , detail: req.cookies.utilisateur ? true : false });
 };

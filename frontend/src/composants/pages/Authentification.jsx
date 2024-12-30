@@ -2,34 +2,35 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import "../styles/authentification.css";
+import "../../styles/authentification.css";
 import Fetch from "../../fonctions/Fetch.js";
 import { useAuthentifier } from "../../hooks/useAuthentifier";
 
 export function Authentification({ role }) {
-    const { estAuthentifier } = useAuthentifier();
-
-    const [nom, setNom] = useState("");
+    const { estAuthentifier, authentifier } = useAuthentifier(); // Permet de savoir si l'utilisateur est auth
+    const [nom, setNom] = useState(""); // Permet de récupérer la valeur de l'input nom
     const [messageErreur, setMessageErreur] = useState(null);
     const [pseudoDisponiblite, setPseudoDisponiblite] = useState(true);
-    // Je met en majuscule le premier charactère du mode
+    const [rediriger, setRediriger] = useState(false);
+
     const modeMajuscule = role.charAt(0).toUpperCase() + role.slice(1);
+    document.title = `${modeMajuscule} - Film`;
 
     // Use effect qui géré la vérification de la disponiblité du pseudo
     useEffect(() => {
         if (nom != "" && role == "inscription") {
             const requete = async () => {
-                const { erreur, reponse } = await Fetch(`http://localhost:8100/authentification/pseudo-disponible/${nom}`, "GET");
-                if (!erreur) {
-                    setPseudoDisponiblite(reponse);
-                    if (!reponse) {
+                const { reponse, detail } = await Fetch(`http://localhost:8100/authentification/pseudo-disponible/${nom}`, "GET");
+                if (reponse) {
+                    setPseudoDisponiblite(detail);
+                    if (!detail) {
                         setMessageErreur("Le pseudo n'est pas disponible");
                     } else {
                         setMessageErreur(null);
                     }
                 } else {
-                    console.error(reponse);
-                    setMessageErreur("Une erreur est survenue");
+                    console.error(detail);
+                    setMessageErreur(detail);
                 }
             };
             requete();
@@ -42,27 +43,22 @@ export function Authentification({ role }) {
             nom: e.target[0].value,
             mdp: e.target[1].value,
         };
-        const { erreur, reponse } = await Fetch(`http://localhost:8100/authentification/${role}`, "POST", donnees);
-
-        if (!erreur) {
-            if (reponse.connecte) {
-                // Aller vers la page mes films
+        const { reponse, detail } = await Fetch(`http://localhost:8100/authentification/${role}`, "POST", donnees);
+        console.log(detail)
+        if (reponse) {
+            if (detail) {
+                authentifier(); // Je met à jour la valeur du provider
+                setRediriger(true);
             } else {
-                if (reponse.erreur == "Pseudo déjà existant") {
-                    setMessageErreur("Le pseudo n'est pas disponible");
-                } else {
-                    setMessageErreur("Une erreur est survenue");
-                }
+                setMessageErreur("Le pseudo n'est pas disponible");
             }
         } else {
-            console.error(reponse);
-            setMessageErreur("Une erreur est survenue");
+            setMessageErreur(detail);
         }
     }
-    if (!estAuthentifier) {
+    if (estAuthentifier || rediriger) {
         return <Navigate to="/mes-films" replace />;
     }
-
     return (
         <main className="Authentification">
             <h1>{modeMajuscule}</h1>

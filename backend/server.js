@@ -11,6 +11,7 @@ import { verificationCookie } from "./middlewares/verificationCookie.js";
 // Routes
 import routeurGenerale from "./routers/generale.js";
 import routeurAuthenfication from "./routers/routeurAuthentification.js";
+import routeurFilm from "./routers/film.js";
 
 const port = 8100;
 const app = e();
@@ -27,6 +28,7 @@ app.use(
 );
 
 app.use(e.json());
+
 app.use(cookieParser());
 app.use(accesibiliteBDD(bdd));
 app.use(verificationCookie);
@@ -34,9 +36,11 @@ app.use(verificationCookie);
 app.set("view-engine", "ejs");
 app.use("/generale", routeurGenerale);
 app.use("/authentification", routeurAuthenfication);
+app.use("/film", routeurFilm);
 
-// app.use("/", (req, res) => {
-//     res.redirect("http://localhost:5173");
-// });
+app.use("/", (req, res) => {
+
+    res.json(req.cookies);
+});
 
 app.listen(port, () => console.log("Serveur démarré => port " + port));

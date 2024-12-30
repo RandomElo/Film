@@ -8,11 +8,12 @@ export default async function Fetch(url, methode, donnees = null) {
         });
         if (requete.ok) {
             const reponse = await requete.json();
-            return { erreur: false, reponse: reponse };
+            return { reponse: reponse.reponse, detail: reponse.messageErreur || reponse.detail };
         } else {
-            return { erreur: true, reponse: "Envoi de la requête" };
+            console.error("Erreur lors de l'envoie de la requete");
+            return { reponse: true, detail: "Envoi de la requête" };
         }
     } catch (erreur) {
-        return { erreur: true, reponse: erreur };
+        return { reponse: false, detail: erreur };
     }
 }
