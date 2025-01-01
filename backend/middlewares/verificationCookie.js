@@ -9,7 +9,6 @@ export const verificationCookie = (req, res, next) => {
                 const utilisateur = await req.Utilisateur.findByPk(decoder.id);
                 if (utilisateur) {
                     req.idUtilisateur = decoder.id;
-                    console.log("cookie ok")
                     next();
                 } else {
                     res.clearCookie("utilisateur");

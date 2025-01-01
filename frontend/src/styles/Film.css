@@ -1,0 +1,104 @@
+.Film {
+    /* Styles globaux */
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+
+    #titre {
+        color: #ff6f61;
+    }
+    .container {
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Permet de mettre de la marge avec des éléments flex */
+    }
+
+    /* Div Carte Principale : Affiche et Infomations Principales */
+    #divCartePrincipale {
+        display: flex;
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+    }
+    #divCartePrincipale img {
+        width: 20%;
+        object-fit: cover;
+    }
+
+    #divInfoGenerale {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    #divInfoGenerale p {
+        margin: 10px 0;
+    }
+
+    /* Synopsis Card */
+    #divCarteSynopsis {
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+    }
+
+    #divCarteSynopsis h2 {
+        margin-bottom: 15px;
+        color: #ff6f61;
+    }
+
+    #divCarteSynopsis p {
+        font-size: 1em;
+        line-height: 1.6;
+    }
+
+    /* Dates Carte */
+    #divCarteDates {
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+    }
+
+    #divCarteDates h2 {
+        margin-bottom: 15px;
+        color: #ff6f61;
+    }
+
+    #divCarteDates p {
+        font-size: 1em;
+        margin: 20px 0;
+    }
+    /* Details Card */
+    #divCarteDetails {
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+    }
+
+    #divCarteDetails h2 {
+        margin-bottom: 15px;
+        color: #ff6f61;
+    }
+
+    #divCarteDetails p {
+        font-size: 1em;
+        margin: 20px 0;
+    }
+    /* Autres définition de style */
+    #pasAffiche {
+        border: 1px solid #ff6f61;
+    }
+    #divErreur p {
+        margin-bottom: 25px;
+    }
+}

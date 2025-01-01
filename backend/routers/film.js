@@ -1,7 +1,9 @@
 import e from "express";
-import { rechercheFilm } from "../controleurs/film.js";
+import { rechercheFilm, detailFilm } from "../controleurs/film.js";
 const routeurFilm = e.Router();
 
-routeurFilm.get("/recherche/:nomFilm", rechercheFilm);
+// Je lui fourni une chaine de caractère et il recherche les films
+routeurFilm.get("/recherche/:recherche", rechercheFilm);
+routeurFilm.get("/detail/:support/:idFilm", detailFilm);
 
 export default routeurFilm;

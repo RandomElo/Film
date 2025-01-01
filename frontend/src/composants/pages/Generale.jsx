@@ -11,7 +11,7 @@ export function Generale() {
             <header>
                 <nav className="navbar">
                     <NavLink className="logo" to="/">
-                        Listes
+                        Film
                     </NavLink>
                     <div className="navLinks">
                         <ul>
@@ -45,9 +45,6 @@ export function Generale() {
                 </nav>
             </header>
             <Outlet />
-            <footer>
-                <p>Site web réalisé par Eloi B.</p>
-            </footer>
         </>
     );
 }

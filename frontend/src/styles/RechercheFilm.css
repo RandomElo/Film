@@ -1,0 +1,82 @@
+.RechercheFilm {
+    margin-bottom: 20px;
+    /* Style du select types */
+    #divSelectType {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    #selectType {
+        color: #fff;
+        background-color: #2a2a2a;
+        padding: 8px 25px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.5s ease;
+        appearance: none;
+        -webkit-appearance: none; /* Compatibilité Safari */
+        -moz-appearance: none; /* Compatibilité Firefox */
+        cursor: pointer;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23bbb'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1rem;
+    }
+    #selectType:focus {
+        outline: none;
+        border-color: #ff6f61;
+        box-shadow: 0 0 5px rgba(255, 111, 97, 0.5);
+    }
+    #selectType option {
+        color: #fff;
+        background-color: #000;
+    }
+    /* Fin de style du select */
+
+    #divInput {
+        text-align: center;
+    }
+    #inputRechercherFilm {
+        color: #fff;
+        background-color: #2a2a2a;
+        padding: 8px 25px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.5s ease;
+    }
+    #inputRechercherFilm::placeholder {
+        color: #bbb;
+    }
+    #inputRechercherFilm:focus {
+        outline: none;
+        border-color: #ff6f61;
+        box-shadow: 0 0 5px rgba(255, 111, 97, 0.5);
+    }
+    #divListeFilm {
+        margin-top: 20px;
+    }
+    .divPresentationFilm {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    .divDetailFilm {
+        text-align: left;
+        margin-left: 20px;
+    }
+    .divDetailFilm p {
+        margin-bottom: 10px;
+    }
+    .divDetailFilm p:last-of-type {
+        margin-bottom: 20px;
+    }
+    .posterFilm {
+        width: 100px;
+        height: 140px;
+    }
+    .pasAffiche {
+        border: 1px solid #ff6f61;
+    }
+}
