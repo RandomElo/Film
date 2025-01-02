@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Fetch from "../fonctions/Fetch";
 import Date from "../fonctions/Date";
 import pasAffiche from "../images/PasAffiche.png";
 import "../styles/RechercheFilm.css";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function RechercheFilm() {
     function AffichageResultat(listeResultat) {
@@ -31,9 +31,9 @@ export function RechercheFilm() {
                                 </p>
                             )}
 
-                            <NavLink to={`/${film.media_type == "tv" ? "serie" : "film"}/` + film.id} className="bouton">
+                            <Link to={`/${film.media_type == "tv" ? "serie" : "film"}/` + film.id} className="bouton">
                                 En savoir plus
-                            </NavLink>
+                            </Link>
                         </div>
                     </div>
                 );
@@ -44,11 +44,10 @@ export function RechercheFilm() {
     const [nomFilm, setNomFilm] = useState(""); // Permet de contenir le nom du film
     const [valeurDivResultat, setValeurDivResultat] = useState("");
     const [typeElement, setTypeElement] = useState("tousTypes");
-    const selectType = useRef(null);
     useEffect(() => {
         if (nomFilm != "") {
             const requete = async () => {
-                const { reponse, detail } = await Fetch(`http://localhost:8100/film/recherche/${encodeURI(nomFilm)}`, "GET");
+                const { reponse, detail } = await Fetch(`http://localhost:8100/tmdb/recherche/${encodeURI(nomFilm)}`, "GET");
                 if (reponse) {
                     console.log(detail);
                     const detailFiltrer = detail.filter((element) => {

@@ -11,7 +11,7 @@ import { verificationCookie } from "./middlewares/verificationCookie.js";
 // Routes
 import routeurGenerale from "./routers/generale.js";
 import routeurAuthenfication from "./routers/routeurAuthentification.js";
-import routeurFilm from "./routers/film.js";
+import routeurTmdb from "./routers/tmdb.js";
 
 const port = 8100;
 const app = e();
@@ -36,7 +36,7 @@ app.use(verificationCookie);
 app.set("view-engine", "ejs");
 app.use("/generale", routeurGenerale);
 app.use("/authentification", routeurAuthenfication);
-app.use("/film", routeurFilm);
+app.use("/tmdb", routeurTmdb);
 
 app.use("/", (req, res) => {
 
