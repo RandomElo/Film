@@ -1,0 +1,38 @@
+.AfficherListeElement {
+    display: flex;
+    flex-direction: column;
+    .divConteneurElement {
+        display: flex;
+        flex-direction: initial;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .divElement {
+        margin-right: 12px;
+        margin-bottom: 8px;
+        padding: 3px;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+    .divElement:hover {
+        border-color: white;
+        cursor: pointer;
+    }
+    .divElement p {
+        text-align: center;
+        width: 100px;
+    }
+    .divGestionPage {
+        text-align: center;
+    }
+    .divGestionPage p {
+        margin-bottom: 10px;
+    }
+    .divBoutonGestionPage button:first-of-type {
+        margin-bottom: 10px;
+    }
+    img {
+        width: 100px;
+        height: 150px;
+    }
+}

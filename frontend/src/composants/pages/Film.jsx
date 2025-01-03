@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useLocation } from "react-router-dom";
+import { Link, useLoaderData, useLocation, useParams } from "react-router-dom";
 
 import "../../styles/Film.css";
 import Date from "../../fonctions/Date";

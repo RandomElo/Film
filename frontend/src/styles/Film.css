@@ -1,16 +1,12 @@
 .Film {
     /* Styles globaux */
     font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #fff;
+    /* color: #fff; */
     display: flex;
     justify-content: center;
     align-items: flex-start;
     padding: 20px;
 
-    #titre {
-        color: #ff6f61;
-    }
     .container {
         width: 100%;
         max-width: 1000px;

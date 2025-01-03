@@ -1,20 +1,53 @@
 .Societe {
-    /* Gestion Erreur */
-    img {
+    /* Styles globaux */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    #container {
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    #divCartePrincipale {
+        display: flex;
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+    }
+    #divCartePrincipale img {
+        width: 20%;
+        /* width: 400px; */
+        /* object-fit: cover; */
+        background-color: white;
+    }
+    #divInfoGenerale {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    #divInfoGenerale p {
+        margin: 10px 0;
+    }
+
+
+
+
+
+
+
+
+    /* img {
         width: 100px;
         height: 150px;
-    }
-    #divListeSerie, #divListeFilm {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .divSerieElement p, #divListeFilm p {
-        margin-right: 15px;
-        margin-bottom: 10px;
-        text-align: center;
-        width: 100px;
-    }
+    } */
+
+    /* Gestion Erreur */
     #divErreur {
         display: block;
     }
@@ -22,7 +55,7 @@
         text-align: center;
         margin-bottom: 20px;
     }
-    #divErreur #divBouton {
+    #divErreur {
         text-align: center;
     }
 }

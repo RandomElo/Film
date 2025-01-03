@@ -39,7 +39,6 @@ export const detailFilm = async (req, res) => {
     }
 };
 export const detailSociete = async (req, res) => {
-    console.log(req.params.type);
     const objetReponse = {};
 
     const requeteSociete = await fetch(`https://api.themoviedb.org/3/company/${req.params.id}?api_key=${process.env.CLE_API}&language=fr-FR`);
@@ -52,7 +51,6 @@ export const detailSociete = async (req, res) => {
 
         const reponseFilm = await requeteFilm.json();
         if (requeteFilm.ok) {
-            console.log("il y a des films");
             objetReponse.film = reponseFilm;
         }
 
@@ -64,5 +62,25 @@ export const detailSociete = async (req, res) => {
         }
     } else {
         return res.json(erreurReponseOk(reponseSociete));
+    }
+};
+export const pageSuivante = async (req, res) => {
+    if (req.params.type == "recherche") {
+        console.log("la requete est pour afficher la page suivante d'une recherche");
+    } else if (req.params.type == "societe") {
+        if (req.params.support == "film" || req.params.support == "serie") {
+            const requete = await fetch(`https://api.themoviedb.org/3/discover/${req.params.support == "film" ? "movie" : "tv"}?api_key=${process.env.CLE_API}&with_companies=${req.params.id}&language=fr-FR&page=${req.params.page}`);
+            const reponse = await requete.json();
+            if (requete.ok) {
+                return res.json({ reponse: true, detail: reponse });
+            } else {
+                console.error("Erreur");
+                return res.json(erreurReponseOk(reponse));
+            }
+        } else {
+            return res.json({ reponse: false, detail: "La valeur de support est incorrect" });
+        }
+    } else {
+        return res.json({ recherche: true, detail: "Erreur" });
     }
 };
