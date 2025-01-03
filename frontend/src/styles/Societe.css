@@ -14,15 +14,14 @@
     }
     #divCartePrincipale {
         display: flex;
+        align-items: center;
         background: #1e1e1e;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         overflow: hidden;
     }
     #divCartePrincipale img {
-        width: 20%;
-        /* width: 400px; */
-        /* object-fit: cover; */
+        width: 250px;
         background-color: white;
     }
     #divInfoGenerale {

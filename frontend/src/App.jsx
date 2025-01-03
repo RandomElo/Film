@@ -48,6 +48,11 @@ const router = createBrowserRouter([
                 element: <Societe type="boiteProduction" />,
                 loader: async ({ params }) => await Fetch(`http://localhost:8100/tmdb/detail-societe/boite-production/${params.id}`),
             },
+            {
+                path: "/diffuseur/:id",
+                element: <Societe type="diffuseur" />,
+                loader: async ({ params }) => await Fetch(`http://localhost:8100/tmdb/detail-societe/diffuseur/${params.id}`),
+            },
         ],
     },
 ]);

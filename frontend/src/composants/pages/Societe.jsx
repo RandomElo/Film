@@ -5,7 +5,7 @@ import { AfficherListeElement } from "../AfficherListeElement";
 export function Societe({ type }) {
     const { reponse, detail } = useLoaderData();
     const { id } = useParams();
-
+    console.log(detail);
     if (!reponse) {
         return (
             <>
@@ -21,16 +21,23 @@ export function Societe({ type }) {
             </>
         );
     }
-    console.log(detail);
     const societeInfo = detail.societe;
-    const societeFilm = detail.film;
-    const societeSerie = detail.serie;
+    let societeFilm;
+    let societeSerie;
+    if (detail.societe) {
+        societeFilm = detail.film;
+    }
+    if (detail.serie) {
+        societeSerie = detail.serie;
+    }
     return (
         <main className="Societe">
             <div id="container">
                 <h1 id="titre">{detail.societe.name}</h1>
                 <div id="divCartePrincipale">
-                    <img src={"https://image.tmdb.org/t/p/original" + societeInfo.logo_path} alt="" />
+                    <div id="imageSociete">
+                        <img src={"https://image.tmdb.org/t/p/original" + societeInfo.logo_path} alt="" />
+                    </div>
                     <div id="divInfoGenerale">
                         {societeInfo.headquarters && (
                             <p>

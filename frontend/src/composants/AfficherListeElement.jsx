@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 import Fetch from "../fonctions/Fetch";
 import "../styles/AfficherListeElement.css";
@@ -34,7 +36,10 @@ export function AfficherListeElement({ type, support, element, id }) {
             <div className="divConteneurElement">
                 {donnee.results.map((element, index) => (
                     <div className={"divElement"} key={index}>
-                        <img src={"https://image.tmdb.org/t/p/original" + element.poster_path} alt={"Poster de " + (element.title || element.name)} />
+                        <Link></Link>
+                        <a href={"/" + support.toLowerCase() + "/" + element.id}>
+                            <img src={"https://image.tmdb.org/t/p/original" + element.poster_path} alt={"Poster de " + (element.title || element.name)} />
+                        </a>
 
                         <p>{element.title || element.name}</p>
                     </div>

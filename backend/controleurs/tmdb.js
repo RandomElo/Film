@@ -40,21 +40,22 @@ export const detailFilm = async (req, res) => {
 };
 export const detailSociete = async (req, res) => {
     const objetReponse = {};
-
-    const requeteSociete = await fetch(`https://api.themoviedb.org/3/company/${req.params.id}?api_key=${process.env.CLE_API}&language=fr-FR`);
+    // company
+    const typeRequete = req.params.type == "boite-production" ? "company" : "network";
+    const requeteSociete = await fetch(`https://api.themoviedb.org/3/${typeRequete}/${req.params.id}?api_key=${process.env.CLE_API}&language=fr-FR`);
 
     const reponseSociete = await requeteSociete.json();
     if (requeteSociete.ok) {
         objetReponse.societe = reponseSociete;
 
-        const requeteFilm = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.CLE_API}&with_companies=${req.params.id}&language=fr-FR`);
+        const requeteFilm = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.CLE_API}&with_${typeRequete}s=${req.params.id}&language=fr-FR`);
 
         const reponseFilm = await requeteFilm.json();
         if (requeteFilm.ok) {
             objetReponse.film = reponseFilm;
         }
 
-        const requeteSerie = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.CLE_API}&with_companies=${req.params.id}&language=fr-FR`);
+        const requeteSerie = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.CLE_API}&with_${typeRequete}s=${req.params.id}&language=fr-FR`);
         const reponseSerie = await requeteSerie.json();
         if (requeteSerie.ok) {
             objetReponse.serie = reponseSerie;
