@@ -4,43 +4,9 @@ import Date from "../fonctions/Date";
 import pasAffiche from "../images/PasAffiche.png";
 import "../styles/RechercheFilm.css";
 import { Link } from "react-router-dom";
+import { AfficherListeElement } from "./AfficherListeElement";
 
 export function RechercheFilm() {
-    function AffichageResultat(listeResultat) {
-        setValeurDivResultat(
-            listeResultat.map((film, index) => {
-                return (
-                    <div key={index} className="divPresentationFilm">
-                        {film.poster_path ? <img src={"https://image.tmdb.org/t/p/original" + film.poster_path} alt={"Poster du film " + film.name} className="posterFilm" /> : <img src={pasAffiche} alt="Image utiliser quand il y a pas d'affiche dans la base de données" className="pasAffiche" />}
-
-                        <div className="divDetailFilm">
-                            <p>
-                                <span className="gras">Titre : </span>
-                                {film.title || film.name}
-                            </p>
-
-                            <p>
-                                <span className="gras">Type : </span>
-                                {film.media_type == "tv" ? "Série" : "Film"}
-                            </p>
-
-                            {(film.release_date || film.first_air_date) && (
-                                <p>
-                                    <span className="gras">Date de sortie : </span>
-                                    {film.release_date ? Date(film.release_date) : Date(film.first_air_date)}
-                                </p>
-                            )}
-
-                            <Link to={`/${film.media_type == "tv" ? "serie" : "film"}/` + film.id} className="bouton">
-                                En savoir plus
-                            </Link>
-                        </div>
-                    </div>
-                );
-            })
-        );
-    }
-
     const [nomFilm, setNomFilm] = useState(""); // Permet de contenir le nom du film
     const [valeurDivResultat, setValeurDivResultat] = useState("");
     const [typeElement, setTypeElement] = useState("tousTypes");
@@ -49,25 +15,23 @@ export function RechercheFilm() {
             const requete = async () => {
                 const { reponse, detail } = await Fetch(`http://localhost:8100/tmdb/recherche/${encodeURI(nomFilm)}`, "GET");
                 if (reponse) {
-                    console.log(detail);
-                    const detailFiltrer = detail.filter((element) => {
-                        if (typeElement == "film") {
-                            return element.media_type == "movie";
-                        }
-                        if (typeElement == "serie") {
-                            return element.media_type == "tv";
-                        }
-                        return true;
-                    });
-                    console.log(detailFiltrer);
+                    const elementFiltrer = detail.results
+                        .filter((element) => {
+                            console.log(element.media_type);
+                            if (typeElement == "film") return element.media_type == "movie";
 
-                    if (detailFiltrer.length >= 10) {
-                        AffichageResultat(detailFiltrer.slice(0, 10));
-                    } else if (detail.results.length > 0) {
-                        AffichageResultat(detailFiltrer);
+                            if (typeElement == "serie") return element.media_type == "tv";
+
+                            return true;
+                        })
+                        .slice(0, 10);
+
+                    console.log(elementFiltrer);
+                    if (detail.results.length > 0) {
+                        detail.results = elementFiltrer;
+                        setValeurDivResultat(<AfficherListeElement type="recherche" element={detail} id={encodeURI(nomFilm)} />);
                     } else {
                         setValeurDivResultat(<p id="pAucunFilm">Aucun film trouvé</p>);
-                        console.log("il y a pas de film");
                     }
                 } else {
                     setValeurDivResultat(<p id="erreur">{detail}</p>);

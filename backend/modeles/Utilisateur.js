@@ -56,10 +56,15 @@ export default function (bdd) {
                 }
             });
             const mdpHash = await bcrypt.hash(req.body.mdp, 12);
+
             const utilisateur = await req.Utilisateur.create({
                 nom: req.body.nom,
                 mdp: mdpHash,
             });
+            req.idUtilisateur = utilisateur.id;
+            req.body.nomListe = "Mes favoris";
+            await req.Liste.creerListe(req, res);
+
             return await req.Utilisateur.generationToken(res, utilisateur);
         } catch (erreur) {
             console.error(erreur);

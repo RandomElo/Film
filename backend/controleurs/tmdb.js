@@ -6,17 +6,13 @@ function erreurReponseOk(reponse) {
     }
 }
 export const recherche = async (req, res) => {
-    let tableauResultat = [];
-    for (let i = 1; i < 4; i++) {
-        const requete = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.CLE_API}&query=${req.params.recherche}&language=fr-FR&page=${i}`);
-        if (requete.ok) {
-            const reponse = await requete.json();
-            tableauResultat = [...tableauResultat, ...reponse.results];
-        } else {
-            return res.json({ reponse: false, messageErreur: "Problème lors de l'envoie de la requete" });
-        }
+    const requete = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.CLE_API}&query=${req.params.recherche}&language=fr-FR`);
+    const reponse = await requete.json();
+    if (requete.ok) {
+        return res.json({ reponse: true, detail: reponse });
+    } else {
+        return res.json(erreurReponseOk(reponse));
     }
-    return res.json({ reponse: true, detail: tableauResultat });
 };
 export const detailFilm = async (req, res) => {
     // Générer le résultat selon le support
@@ -41,21 +37,21 @@ export const detailFilm = async (req, res) => {
 export const detailSociete = async (req, res) => {
     const objetReponse = {};
     // company
-    const typeRequete = req.params.type == "boite-production" ? "company" : "network";
-    const requeteSociete = await fetch(`https://api.themoviedb.org/3/${typeRequete}/${req.params.id}?api_key=${process.env.CLE_API}&language=fr-FR`);
+    const typeRequeteSociete = req.params.type == "boite-production" ? "company" : "network";
+    const typeRequete = req.params.type == "boite-production" ? "companies" : "networks";
+    const requeteSociete = await fetch(`https://api.themoviedb.org/3/${typeRequeteSociete}/${req.params.id}?api_key=${process.env.CLE_API}&language=fr-FR`);
 
     const reponseSociete = await requeteSociete.json();
     if (requeteSociete.ok) {
         objetReponse.societe = reponseSociete;
 
-        const requeteFilm = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.CLE_API}&with_${typeRequete}s=${req.params.id}&language=fr-FR`);
+        const requeteFilm = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.CLE_API}&with_${typeRequete}=${req.params.id}&language=fr-FR`);
 
         const reponseFilm = await requeteFilm.json();
         if (requeteFilm.ok) {
             objetReponse.film = reponseFilm;
         }
-
-        const requeteSerie = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.CLE_API}&with_${typeRequete}s=${req.params.id}&language=fr-FR`);
+        const requeteSerie = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${process.env.CLE_API}&with_${typeRequete}=${req.params.id}&language=fr-FR`);
         const reponseSerie = await requeteSerie.json();
         if (requeteSerie.ok) {
             objetReponse.serie = reponseSerie;
@@ -66,22 +62,23 @@ export const detailSociete = async (req, res) => {
     }
 };
 export const pageSuivante = async (req, res) => {
+    let requete = "";
     if (req.params.type == "recherche") {
-        console.log("la requete est pour afficher la page suivante d'une recherche");
+        requete = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${process.env.CLE_API}&query=${req.params.id}&language=fr-FR&page=${req.params.page}`);
     } else if (req.params.type == "societe") {
         if (req.params.support == "film" || req.params.support == "serie") {
-            const requete = await fetch(`https://api.themoviedb.org/3/discover/${req.params.support == "film" ? "movie" : "tv"}?api_key=${process.env.CLE_API}&with_companies=${req.params.id}&language=fr-FR&page=${req.params.page}`);
-            const reponse = await requete.json();
-            if (requete.ok) {
-                return res.json({ reponse: true, detail: reponse });
-            } else {
-                console.error("Erreur");
-                return res.json(erreurReponseOk(reponse));
-            }
+            requete = await fetch(`https://api.themoviedb.org/3/discover/${req.params.support == "film" ? "movie" : "tv"}?api_key=${process.env.CLE_API}&with_companies=${req.params.id}&language=fr-FR&page=${req.params.page}`);
         } else {
             return res.json({ reponse: false, detail: "La valeur de support est incorrect" });
         }
     } else {
         return res.json({ recherche: true, detail: "Erreur" });
+    }
+    const reponse = await requete.json();
+    if (requete.ok) {
+        return res.json({ reponse: true, detail: reponse });
+    } else {
+        console.error("Erreur");
+        return res.json(erreurReponseOk(reponse));
     }
 };

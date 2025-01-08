@@ -16,12 +16,15 @@ export function Generale() {
                     <div className="navLinks">
                         <ul>
                             <li>
-                                <NavLink to="/">Films</NavLink>
+                                <NavLink to="/">Accueil</NavLink>
                             </li>
                             {estAuthentifier ? (
                                 <>
                                     <li>
                                         <NavLink to="/mes-films">Mes films</NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/mes-listes">Mes listes</NavLink>
                                     </li>
                                     <li>
                                         <NavLink to="/mon-compte">Mon compte</NavLink>
@@ -37,9 +40,6 @@ export function Generale() {
                                     </li>
                                 </>
                             )}
-                            <li>
-                                <NavLink to="/connexion">A propos</NavLink>
-                            </li>
                         </ul>
                     </div>
                 </nav>

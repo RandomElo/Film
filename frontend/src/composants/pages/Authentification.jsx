@@ -61,9 +61,9 @@ export function Authentification({ role }) {
     }
     return (
         <main className="Authentification">
-            <h1>{modeMajuscule}</h1>
+            <h1 id="titre">{modeMajuscule}</h1>
             <form onSubmit={(e) => EnvoieFormulaire(e, role)}>
-                <div id="inputNom">
+                <div id="divInputNom">
                     <label htmlFor="nom">Nom :</label>
                     <input type="text" id="nom" placeholder="Jean" value={nom} onChange={(e) => setNom(e.target.value)} required />
                 </div>

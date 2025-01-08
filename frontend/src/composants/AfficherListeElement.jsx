@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
@@ -11,36 +11,33 @@ import "../styles/AfficherListeElement.css";
  * @param {string} id Permet d'avoir l'idée du paramètre
  * @param {string} type Permet de savoir si j'affiche pour un film
  */
-export function AfficherListeElement({ type, support, element, id }) {
+export function AfficherListeElement({ type, support = null, element, id }) {
     const [pageActuelle, setPageActuelle] = useState(1);
     const [donnee, setDonnee] = useState(element);
+    console.log(element);
+    useEffect(() => {
+        setDonnee(element);
+    }, [element]);
 
     async function GestionCliquePage(e) {
-        // console.log(e.target.textContent);
         const nouvellePage = e.target.textContent == "Page suivante" ? pageActuelle + 1 : pageActuelle - 1;
         setPageActuelle(nouvellePage);
 
-        // Comment faire en sorte de renvoyer la requete pour obtenir juste la page suivante
-        // Crée un nouvelle route, qui fait a peut près la meme chose mais renvoie moins de données
-        console.log(`http://localhost:8100/tmdb/page-suivante/${type}/${support.toLowerCase()}/${id}/${nouvellePage}`);
-        const { reponse, detail } = await Fetch(`http://localhost:8100/tmdb/page-suivante/${type}/${support.toLowerCase()}/${id}/${pageActuelle + 1}`);
+        const { reponse, detail } = await Fetch(`http://localhost:8100/tmdb/page-suivante/${type}/${support ? support.toLowerCase() : type}/${id}/${pageActuelle + 1}`);
         if (reponse) {
             setDonnee(detail);
         } else {
             console.error(detail);
         }
     }
-
     return (
         <div className="AfficherListeElement">
             <div className="divConteneurElement">
                 {donnee.results.map((element, index) => (
                     <div className={"divElement"} key={index}>
-                        <Link></Link>
-                        <a href={"/" + support.toLowerCase() + "/" + element.id}>
+                        <Link to={"/" + (support ? support.toLowerCase() : element.media_type == "tv" ? "serie" : "film") + "/" + element.id}>
                             <img src={"https://image.tmdb.org/t/p/original" + element.poster_path} alt={"Poster de " + (element.title || element.name)} />
-                        </a>
-
+                        </Link>
                         <p>{element.title || element.name}</p>
                     </div>
                 ))}
@@ -68,7 +65,7 @@ export function AfficherListeElement({ type, support, element, id }) {
 
 AfficherListeElement.propTypes = {
     type: PropTypes.string.isRequired,
-    support: PropTypes.string.isRequired,
+    support: PropTypes.string,
     element: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
 };

@@ -13,9 +13,14 @@
         padding: 3px;
         border: 1px solid black;
         border-radius: 10px;
+
+        background: #1e1e1e;
+        border-radius: 10px;
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); */
+        padding: 20px;
     }
     .divElement:hover {
-        border-color: white;
+        border-color: #ff6f61;
         cursor: pointer;
     }
     .divElement p {
@@ -29,7 +34,7 @@
         margin-bottom: 10px;
     }
     .divBoutonGestionPage button:first-of-type {
-        margin-bottom: 10px;
+        margin-right: 10px;
     }
     img {
         width: 100px;

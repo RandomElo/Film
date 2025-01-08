@@ -104,4 +104,32 @@
     #divErreur #divBouton {
         text-align: center;
     }
+    #divGestionPlaylist {
+        margin-top: -10px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    #ajouterFavori {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        max-width: fit-content;
+
+        display: flex;
+        align-items: center;
+
+        border: 1px solid #ff6f61;
+        background-color: #ff6f61;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #ajouterFavori:hover {
+        background-color: transparent;
+    }
+
+
+    #ajouterFavori img {
+        width: 30px;
+        margin-right: 5px;
+    }
 }

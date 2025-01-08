@@ -2,10 +2,9 @@ import { useLoaderData, useParams } from "react-router-dom";
 import "../../styles/Societe.css";
 import { AfficherListeElement } from "../AfficherListeElement";
 
-export function Societe({ type }) {
+export function Societe() {
     const { reponse, detail } = useLoaderData();
     const { id } = useParams();
-    console.log(detail);
     if (!reponse) {
         return (
             <>

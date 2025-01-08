@@ -11,6 +11,7 @@ import Fetch from "./fonctions/Fetch";
 import "./App.css";
 import { Film } from "./composants/pages/Film";
 import { Societe } from "./composants/pages/Societe";
+import { MesListes } from "./composants/pages/MesListes";
 
 const router = createBrowserRouter([
     {
@@ -45,13 +46,18 @@ const router = createBrowserRouter([
             },
             {
                 path: "/boite-production/:id",
-                element: <Societe type="boiteProduction" />,
+                element: <Societe />,
                 loader: async ({ params }) => await Fetch(`http://localhost:8100/tmdb/detail-societe/boite-production/${params.id}`),
             },
             {
                 path: "/diffuseur/:id",
-                element: <Societe type="diffuseur" />,
+                element: <Societe />,
                 loader: async ({ params }) => await Fetch(`http://localhost:8100/tmdb/detail-societe/diffuseur/${params.id}`),
+            },
+            {
+                path: "/mes-listes",
+                element: <MesListes />,
+                loader: async () => await Fetch(`http://localhost:8100/listes/mes-listes`),
             },
         ],
     },

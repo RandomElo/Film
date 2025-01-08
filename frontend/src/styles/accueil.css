@@ -1,10 +1,32 @@
 .Accueil {
-
+    /* Styles globaux */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* padding: 20px; */
+    #container {
+        width: 100%;
+        max-width: 1000px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
     #divPresentationProjet {
-        width: 80%;
-        text-align: justify;
+        width: 60%;
         margin-left: auto;
         margin-right: auto;
+        padding: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        background: #1e1e1e;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        text-align: justify;
     }
     #divPresentationProjet h2 {
         text-align: center;
@@ -13,6 +35,6 @@
     }
     #divPresentationProjet p {
         margin-bottom: 10px;
+        line-height: 22px;
     }
-
 }

@@ -10,8 +10,9 @@ import { verificationCookie } from "./middlewares/verificationCookie.js";
 
 // Routes
 import routeurGenerale from "./routers/generale.js";
-import routeurAuthenfication from "./routers/routeurAuthentification.js";
+import routeurUtilisateur from "./routers/utilisateur.js";
 import routeurTmdb from "./routers/tmdb.js";
+import routeurListe from "./routers/listes.js";
 
 const port = 8100;
 const app = e();
@@ -35,11 +36,11 @@ app.use(verificationCookie);
 
 app.set("view-engine", "ejs");
 app.use("/generale", routeurGenerale);
-app.use("/authentification", routeurAuthenfication);
+app.use("/authentification", routeurUtilisateur);
 app.use("/tmdb", routeurTmdb);
+app.use("/listes", routeurListe);
 
 app.use("/", (req, res) => {
-
     res.json(req.cookies);
 });
 

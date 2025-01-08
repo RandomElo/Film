@@ -1,12 +1,29 @@
-import { Link, useLoaderData, useLocation, useParams } from "react-router-dom";
+import { Link, useLoaderData, useLocation } from "react-router-dom";
 
 import "../../styles/Film.css";
 import Date from "../../fonctions/Date";
 import pasAffiche from "../../images/PasAffiche.png";
 import SommeArgent from "../../fonctions/SommeArgent";
+import coeurBlanc from "../../assets/images/coeur-blanc.png";
+import { useAuthentifier } from "../../hooks/useAuthentifier.jsx";
+import Fetch from "../../fonctions/Fetch.js";
+
 export function Film() {
+    async function EvenementAjouterFavori(e) {
+        const { reponse, detail } = await Fetch("http://localhost:8100/listes/ajouter-liste", "POST", { idFilm: idFilm });
+    }
     const { reponse, detail } = useLoaderData();
+    const { estAuthentifier } = useAuthentifier();
+
     const support = useLocation().pathname.split("/")[1];
+    const idFilm = useLocation().pathname.split("/")[2];
+    console.log(idFilm);
+
+    if (support == "serie") {
+        document.title = "Série - Film";
+    } else {
+        document.title = "Film - Film";
+    }
     if (!reponse) {
         return (
             <>
@@ -24,13 +41,20 @@ export function Film() {
             </>
         );
     }
-    console.log(detail);
     const donneesFilm = detail.detailFilm;
     return (
         <>
             <main className="Film">
                 <div className="container">
                     <h1 id="titre">{donneesFilm.title || donneesFilm.name}</h1>
+                    {estAuthentifier && (
+                        <div id="divGestionPlaylist">
+                            <a id="ajouterFavori" onClick={EvenementAjouterFavori}>
+                                <img src={coeurBlanc} alt="Icone coeur" />
+                                Ajouter aux favoris
+                            </a>
+                        </div>
+                    )}
                     <div id="divCartePrincipale">
                         {donneesFilm.poster_path ? <img src={"https://image.tmdb.org/t/p/original" + donneesFilm.poster_path} alt={"Poster du film " + donneesFilm.name} className="posterFilm" /> : <img src={pasAffiche} alt="Image utiliser quand il y a pas d'affiche dans la base de données" id="pasAffiche" />}
                         <div id="divInfoGenerale">
