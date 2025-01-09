@@ -19,6 +19,10 @@
         /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); */
         padding: 20px;
     }
+    .divElement:last-of-type {
+        margin-right: 0px;
+
+    }
     .divElement:hover {
         border-color: #ff6f61;
         cursor: pointer;
@@ -26,6 +30,7 @@
     .divElement p {
         text-align: center;
         width: 100px;
+        margin-top: 5px;
     }
     .divGestionPage {
         text-align: center;

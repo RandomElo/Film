@@ -1,12 +1,26 @@
-import { Navigate } from "react-router-dom";
 import { useAuthentifier } from "../../hooks/useAuthentifier";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Navigate } from "react-router-dom";
+import { AfficherListeElement } from "../AfficherListeElement";
 
+import "../../styles/MesListes.css";
+import { useState } from "react";
+import Modal from "../Modal";
+import Fetch from "../../fonctions/Fetch";
+function NouvelleListe(e) {
+    e.preventDefault();
+    const { reponse, detail } = Fetch("http://localhost:8100/listes/creer-liste", "POST", { nomListe: e.target[0].value, mode: "classique" });
+    if(reponse) {
+
+    } else {
+        
+    }
+}
 export function MesListes() {
     const { estAuthentifier } = useAuthentifier();
     const { reponse, detail } = useLoaderData();
-    console.log(detail);
+    const [modalOuverte, setModalOuverte] = useState(false);
 
+    let detailTableau = Object.values(detail);
     if (!estAuthentifier) {
         return <Navigate to="/connexion" replace />;
     }
@@ -22,24 +36,26 @@ export function MesListes() {
     return (
         <main className="MesListes">
             <h1 id="titre">Mes listes</h1>
-            {detail.length == 0 ? (
-                <p>Vous n'avez pas de listes rattachées à votre compte</p>
+            <a id="ajouterListe" onClick={() => setModalOuverte(true)}>
+                <span>+</span>Crée une nouvelle liste
+            </a>
+            {detailTableau.length == 0 ? (
+                <p>Vous avez aucune liste rattacher à votre compte</p>
             ) : (
-                <div id="container">
-                    {detail.map((liste, index) => (
-                        <div className="element" key={index}>
-                            <h2 className="titreListe">{liste.nom}</h2>
-                            {!liste.listeFilm ? (
-                                <p>Aucun film attacher à la liste</p>
-                            ) : (
-                                <div>
-                                    <p>En cours de dev</p>
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
+                detailTableau.map((liste, indexListe) => (
+                    <div className="liste" key={indexListe}>
+                        <h2 className="titreListe">{liste.nom}</h2>
+                        <AfficherListeElement type="liste" element={liste.film} />
+                    </div>
+                ))
             )}
+            <Modal estOuverte={modalOuverte} fermerModal={() => setModalOuverte(false)}>
+                <h2>Création d'une liste</h2>
+                <form onSubmit={NouvelleListe}>
+                    <input type="text" placeholder="Nom de la liste" required />
+                    <button type="submit">Enregistrer</button>
+                </form>
+            </Modal>
         </main>
     );
 }

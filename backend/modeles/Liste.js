@@ -28,9 +28,14 @@ export default function (bdd) {
     );
     Liste.creerListe = async function (req, res) {
         if (req.body.nomListe) {
-            console.log(req.body.nomListe);
-            console.log(req.idUtilisateur);
-            req.Liste.create({ nom: req.body.nomListe, idUtilisateur: req.idUtilisateur });
+            try {
+                req.Liste.create({ nom: req.body.nomListe, idUtilisateur: req.idUtilisateur });
+                if (req.body.mode == "classique") {
+                    return res.json({ resultat: true, detail: "Liste crée" });
+                }
+            } catch (erreur) {
+                return res.json({ resultat: false, detail: erreur });
+            }
         } else {
             return res.json({ reponse: false, detail: "Erreur lors de la création de la liste" });
         }

@@ -1,0 +1,29 @@
+.MesListes {
+    .titreListe {
+        margin-bottom: 10px;
+        text-align: center;
+        color: #ff6f61;
+    }
+    #ajouterListe {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15px;
+        padding: 10px;
+        max-width: fit-content;
+
+        display: flex;
+        align-items: center;
+
+        background-color: #ff6f61;
+        border: 1px solid #ff6f61;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    #ajouterListe:hover {
+        background-color: transparent;
+    }
+    #ajouterListe span {
+        font-size: 20px;
+        margin-right: 10px;
+    }
+}
