@@ -19,7 +19,7 @@ export default function (bdd) {
             },
             listeFilm: {
                 type: DataTypes.JSON,
-                default: [],
+                defaultValue: [],
             },
         },
         {

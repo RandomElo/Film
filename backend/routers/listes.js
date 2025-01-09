@@ -1,7 +1,7 @@
 import e from "express";
-import { mesListes, ajouterListe } from "../controleurs/listes.js";
+import { mesListes, ajouterFilm } from "../controleurs/listes.js";
 const routeurListe = e.Router();
 routeurListe.get("/mes-listes", mesListes);
-routeurListe.post("/ajouter-liste", ajouterListe);
+routeurListe.post("/ajouter-film", ajouterFilm);
 
 export default routeurListe;

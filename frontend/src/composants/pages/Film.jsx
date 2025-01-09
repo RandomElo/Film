@@ -10,14 +10,16 @@ import Fetch from "../../fonctions/Fetch.js";
 
 export function Film() {
     async function EvenementAjouterFavori(e) {
-        const { reponse, detail } = await Fetch("http://localhost:8100/listes/ajouter-liste", "POST", { idFilm: idFilm });
+        console.log({ idFilm: idFilm, nomListe: e.target.dataset.nomliste });
+        const { reponse, detail } = await Fetch("http://localhost:8100/listes/ajouter-film", "POST", { idFilm: idFilm, nomListe: e.target.dataset.nomliste, support });
+        console.log(reponse);
+        console.log(detail);
     }
     const { reponse, detail } = useLoaderData();
     const { estAuthentifier } = useAuthentifier();
 
     const support = useLocation().pathname.split("/")[1];
     const idFilm = useLocation().pathname.split("/")[2];
-    console.log(idFilm);
 
     if (support == "serie") {
         document.title = "Série - Film";
@@ -49,7 +51,7 @@ export function Film() {
                     <h1 id="titre">{donneesFilm.title || donneesFilm.name}</h1>
                     {estAuthentifier && (
                         <div id="divGestionPlaylist">
-                            <a id="ajouterFavori" onClick={EvenementAjouterFavori}>
+                            <a id="ajouterFavori" onClick={EvenementAjouterFavori} data-nomliste={"Mes favoris"}>
                                 <img src={coeurBlanc} alt="Icone coeur" />
                                 Ajouter aux favoris
                             </a>

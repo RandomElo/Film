@@ -6,12 +6,7 @@ export function MesListes() {
     const { estAuthentifier } = useAuthentifier();
     const { reponse, detail } = useLoaderData();
     console.log(detail);
-    detail.map((liste) => {
-        if (liste.listeFilm) {
-            console.log("je ne suis pas nul");
-        }
-        console.log(liste.listeFilm);
-    });
+
     if (!estAuthentifier) {
         return <Navigate to="/connexion" replace />;
     }
@@ -34,7 +29,13 @@ export function MesListes() {
                     {detail.map((liste, index) => (
                         <div className="element" key={index}>
                             <h2 className="titreListe">{liste.nom}</h2>
-                            {!liste.listeFilm ? <p>Aucun film attacher à la liste</p> : <p>Des films sont rattaché à la liste</p>}
+                            {!liste.listeFilm ? (
+                                <p>Aucun film attacher à la liste</p>
+                            ) : (
+                                <div>
+                                    <p>En cours de dev</p>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
