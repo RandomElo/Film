@@ -7,25 +7,40 @@ import SommeArgent from "../../fonctions/SommeArgent";
 import coeurBlanc from "../../assets/images/coeur-blanc.png";
 import { useAuthentifier } from "../../hooks/useAuthentifier.jsx";
 import Fetch from "../../fonctions/Fetch.js";
+import { useEffect, useState } from "react";
+import Notification from "../Notification.jsx";
 
 export function Film() {
-    async function EvenementAjouterFavori(e) {
-        console.log({ idFilm: idFilm, nomListe: e.target.dataset.nomliste });
-        const { reponse, detail } = await Fetch("http://localhost:8100/listes/ajouter-film", "POST", { idFilm: idFilm, nomListe: e.target.dataset.nomliste, support });
-        console.log(reponse);
-        console.log(detail);
-    }
-    const { reponse, detail } = useLoaderData();
     const { estAuthentifier } = useAuthentifier();
+    const { reponse, detail } = useLoaderData();
+    const [donneesListe, setDonneesListe] = useState({ reponse: null, detail: null });
+    const [afficherNotification, setAfficherNotification] = useState(false);
 
     const support = useLocation().pathname.split("/")[1];
     const idFilm = useLocation().pathname.split("/")[2];
 
-    if (support == "serie") {
-        document.title = "Série - Film";
-    } else {
-        document.title = "Film - Film";
+    const [notificationDonnees, setNotificationDonnees] = useState(null);
+
+    async function EvenementAjouterFavori(e) {
+        const { reponse, detail } = await Fetch("http://localhost:8100/listes/ajouter-film", "POST", { idFilm: idFilm, nomListe: e.target.value, support: support });
+        setNotificationDonnees({
+            type: reponse ? "succes" : "erreur",
+            message: detail,
+        });
+        setAfficherNotification(true);
     }
+
+    useEffect(() => {
+        const recuperationListe = async () => {
+            if (estAuthentifier) {
+                const { reponse, detail } = await Fetch("http://localhost:8100/listes/nom-listes");
+                setDonneesListe({ reponse, detail });
+            }
+        };
+
+        recuperationListe();
+    }, [estAuthentifier]);
+
     if (!reponse) {
         return (
             <>
@@ -43,18 +58,42 @@ export function Film() {
             </>
         );
     }
+
+    // console.log(donnees);
+    if (support == "serie") {
+        document.title = "Série - Film";
+    } else {
+        document.title = "Film - Film";
+    }
+
     const donneesFilm = detail.detailFilm;
     return (
         <>
             <main className="Film">
+                {afficherNotification && <Notification message={notificationDonnees.message} type={notificationDonnees.type} duree={3000} fermerNotification={() => setAfficherNotification(false)} />}
+
                 <div className="container">
                     <h1 id="titre">{donneesFilm.title || donneesFilm.name}</h1>
                     {estAuthentifier && (
-                        <div id="divGestionPlaylist">
-                            <a id="ajouterFavori" onClick={EvenementAjouterFavori} data-nomliste={"Mes favoris"}>
-                                <img src={coeurBlanc} alt="Icone coeur" />
-                                Ajouter aux favoris
-                            </a>
+                        <div id="divGestionListe">
+                            {estAuthentifier &&
+                                (!donneesListe.reponse ? (
+                                    <p id="pErreur">{donneesListe.detail}</p>
+                                ) : (
+                                    <>
+                                        <label htmlFor="selectAjouterListe">Ajouter à une liste : </label>
+                                        <select id="selectAjouterListe" onChange={EvenementAjouterFavori}>
+                                            <option value="" disabled selected>
+                                                Sélectionner une liste
+                                            </option>
+                                            {donneesListe.detail.map((titreListe, index) => (
+                                                <option value={titreListe} key={index}>
+                                                    {titreListe}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </>
+                                ))}
                         </div>
                     )}
                     <div id="divCartePrincipale">

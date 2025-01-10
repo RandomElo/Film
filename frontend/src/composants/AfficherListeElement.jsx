@@ -37,8 +37,8 @@ export function AfficherListeElement({ type, support = null, element, id = null 
                         <div className={"divElement"} key={index}>
                             <Link to={"/" + (support ? support.toLowerCase() : element.media_type == "tv" ? "serie" : "film") + "/" + element.id}>
                                 <img src={"https://image.tmdb.org/t/p/original" + element.poster_path} alt={"Poster de " + (element.title || element.name)} />
+                                <p>{element.title || element.name}</p>
                             </Link>
-                            <p>{element.title || element.name}</p>
                         </div>
                     ))}
                 </div>
@@ -69,8 +69,8 @@ export function AfficherListeElement({ type, support = null, element, id = null 
                         <div className={"divElement"} key={index}>
                             <Link to={"/" + element.support + "/" + element.id}>
                                 <img src={element.image} alt={"Poster de " + (element.title || element.name)} />
+                                <p>{element.titre}</p>
                             </Link>
-                            <p>{element.titre}</p>
                         </div>
                     ))}
                 </div>

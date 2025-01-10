@@ -104,7 +104,7 @@
     #divErreur #divBouton {
         text-align: center;
     }
-    #divGestionPlaylist {
+    /* #divGestionPlaylist {
         margin-top: -10px;
         margin-bottom: 20px;
         text-align: center;
@@ -126,10 +126,39 @@
     #ajouterFavori:hover {
         background-color: transparent;
     }
-
-
     #ajouterFavori img {
         width: 30px;
         margin-right: 5px;
+    } */
+    #divGestionListe {
+        text-align: center;
+    }
+    #selectAjouterListe {
+        color: #fff;
+        background-color: #2a2a2a;
+        margin-left: 10px;
+        padding: 8px 25px 8px 10px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.5s ease;
+        appearance: none;
+        -webkit-appearance: none; /* Compatibilité Safari */
+        -moz-appearance: none; /* Compatibilité Firefox */
+        cursor: pointer;
+        /* Permet de mettre une flèche */
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23bbb'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 1rem;
+    }
+    #selectAjouterListe:focus {
+        outline: none;
+        border-color: #ff6f61;
+        box-shadow: 0 0 5px rgba(255, 111, 97, 0.5);
+    }
+    #selectAjouterListe option {
+        color: #fff;
+        background-color: #000;
     }
 }

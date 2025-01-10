@@ -1,0 +1,52 @@
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* En haut à gauche */
+    background-color: #4caf50; /* Couleur pour succès */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.4s ease;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.notification.succes {
+    background-color: #4caf50;
+}
+.notification.erreur {
+    background-color: #f44336;
+}
+.notification.visible {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification.error {
+    background-color: #f44336; /* Couleur pour erreur */
+}
+
+.notification.warning {
+    background-color: #ff9800; /* Couleur pour avertissement */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    margin-left: 10px;
+}
+
+.close-button:hover {
+    color: #ccc;
+}

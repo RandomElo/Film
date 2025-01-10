@@ -6,20 +6,25 @@ import "../../styles/MesListes.css";
 import { useState } from "react";
 import Modal from "../Modal";
 import Fetch from "../../fonctions/Fetch";
-function NouvelleListe(e) {
-    e.preventDefault();
-    const { reponse, detail } = Fetch("http://localhost:8100/listes/creer-liste", "POST", { nomListe: e.target[0].value, mode: "classique" });
-    if(reponse) {
+import Notification from "../Notification";
 
-    } else {
-        
-    }
-}
 export function MesListes() {
     const { estAuthentifier } = useAuthentifier();
     const { reponse, detail } = useLoaderData();
     const [modalOuverte, setModalOuverte] = useState(false);
+    const [afficherNotification, setAfficherNotification] = useState(false);
+    const [notificationDonnees, setNotificationDonnees] = useState(null);
 
+    async function NouvelleListe(e) {
+        e.preventDefault();
+        const { reponse, detail } = await Fetch("http://localhost:8100/listes/creer-liste", "POST", { nomListe: e.target[0].value, mode: "classique" });
+        setNotificationDonnees({
+            type: reponse ? "succes" : "erreur",
+            message: detail,
+        });
+        setAfficherNotification(true);
+        setModalOuverte(false);
+    }
     let detailTableau = Object.values(detail);
     if (!estAuthentifier) {
         return <Navigate to="/connexion" replace />;
@@ -33,8 +38,11 @@ export function MesListes() {
             </main>
         );
     }
+    console.log(detail);
     return (
         <main className="MesListes">
+            {afficherNotification && <Notification message={notificationDonnees.message} type={notificationDonnees.type} duree={3000} fermerNotification={() => setAfficherNotification(false)} />}
+
             <h1 id="titre">Mes listes</h1>
             <a id="ajouterListe" onClick={() => setModalOuverte(true)}>
                 <span>+</span>Crée une nouvelle liste
@@ -45,7 +53,7 @@ export function MesListes() {
                 detailTableau.map((liste, indexListe) => (
                     <div className="liste" key={indexListe}>
                         <h2 className="titreListe">{liste.nom}</h2>
-                        <AfficherListeElement type="liste" element={liste.film} />
+                        {liste.film.length == 0 ? <p className="pAucunFilm">Aucun film dans la liste</p> : <AfficherListeElement type="liste" element={liste.film} />}
                     </div>
                 ))
             )}

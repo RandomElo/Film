@@ -1,5 +1,6 @@
 .MesListes {
     .titreListe {
+        margin-top: 20px;
         margin-bottom: 10px;
         text-align: center;
         color: #ff6f61;
@@ -7,7 +8,6 @@
     #ajouterListe {
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 15px;
         padding: 10px;
         max-width: fit-content;
 
@@ -25,5 +25,9 @@
     #ajouterListe span {
         font-size: 20px;
         margin-right: 10px;
+    }
+    .pAucunFilm {
+        text-align: center;
+        font-weight: bold;
     }
 }

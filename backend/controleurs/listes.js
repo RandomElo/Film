@@ -50,6 +50,21 @@ export const mesListes = async (req, res) => {
     res.json({ reponse: true, detail: objetReponse });
 };
 
+// Pemret de retourner juste le nom des listes
+export const nomListes = async (req, res) => {
+    try {
+        const listeBdd = await req.Liste.findAll({ where: { idUtilisateur: req.idUtilisateur } });
+        // console.log(listeBdd);
+        let tableauReponse = [];
+        for (let liste in listeBdd) {
+            tableauReponse.push(listeBdd[liste].nom);
+        }
+        return res.json({ reponse: true, detail: tableauReponse });
+    } catch (erreur) {
+        return res.json({ reponse: false, detail: "Erreur lors de la récupération des listes" });
+    }
+};
+
 // Pemret de pouvoir ajouter un film à une liste
 export const ajouterFilm = async (req, res) => {
     const liste = await req.Liste.findOne({ where: { nom: req.body.nomListe, idUtilisateur: req.idUtilisateur } });
